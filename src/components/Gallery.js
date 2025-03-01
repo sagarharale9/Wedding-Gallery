@@ -16,8 +16,9 @@ const fetchImages = async () => {
   try {
     setLoading(true);
     setError(null);
-
-    const res = await fetch(`/api/images?category=${activeTab}`);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"; // Use environment variable
+    const res = await fetch(`${apiUrl}/api/images?category=${activeTab}`);
+    // const res = await fetch(`/api/images?category=${activeTab}`);
     if (!res.ok) throw new Error("Failed to fetch images");
 
     const data = await res.json();
