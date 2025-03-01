@@ -12,30 +12,30 @@ export default function Gallery() {
   const [error, setError] = useState(null);
 const { isAdmin, logout } = useAuth();
 
-  useEffect(() => {
-    async function fetchImages() {
-      try {
-        setLoading(true);
-        setError(null);
+const fetchImages = async () => {
+  try {
+    setLoading(true);
+    setError(null);
 
-        const res = await fetch(`/api/images?category=${activeTab}`);
-        if (!res.ok) throw new Error("Failed to fetch images");
+    const res = await fetch(`/api/images?category=${activeTab}`);
+    if (!res.ok) throw new Error("Failed to fetch images");
 
-        const data = await res.json();
+    const data = await res.json();
 
-        if (Array.isArray(data)) {
-          setImages(data);
-        } else {
-          throw new Error("Invalid API response");
-        }
-      } catch (error) {
-        console.error("Error fetching images:", error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
+    if (Array.isArray(data)) {
+      setImages(data);
+    } else {
+      throw new Error("Invalid API response");
     }
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    setError(error.message);
+  } finally {
+    setLoading(false);
+  }
+}
 
+  useEffect(() => {
     fetchImages();
   }, [activeTab]);
 
@@ -72,7 +72,7 @@ const { isAdmin, logout } = useAuth();
       {error && <p className="text-center text-red-500">{error}</p>}
 
       {/* Display Images */}
-      {!loading && !error && <ImageGrid images={images} title={activeTab} />}
+      {!loading && !error && <ImageGrid images={images} title={activeTab} refreshImage={fetchImages} />}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ImageModal from "./ImageModal";
 import { useAuth } from "@/context/AuthContext";
 
-export default function ImageGrid({ images, title, refreshImages }) {
+export default function ImageGrid({ images, title, refreshImage }) {
   const { isAdmin } = useAuth();
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -17,7 +17,7 @@ export default function ImageGrid({ images, title, refreshImages }) {
 
     if (res.ok) {
       alert("Image deleted successfully");
-      refreshImages(); // Refresh the image list after deletion
+      refreshImage(); // Refresh the image list after deletion
     } else {
       alert("Failed to delete image");
     }
