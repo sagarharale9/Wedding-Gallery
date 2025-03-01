@@ -16,7 +16,8 @@ export default function handler(req: NextApiRequest, res:NextApiResponse){
     try{
         const imagesDirectory = path.join(process.cwd(),"public","images",category);
         const files =fs.readdirSync(imagesDirectory);
-        const imagePaths = files.map((file) => `/images/${category}/${file}`);
+        // const imagePaths = files.map((file) => `/images/${category}/${file}`); 
+        const imagePaths = files.map((file) => `/Wedding-Gallery/images/${category}/${file}`);
         if(req.method === "GET"){
             res.status(200).json(imagePaths);
         }else {
