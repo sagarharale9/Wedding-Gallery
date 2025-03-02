@@ -20,10 +20,11 @@ const fetchImages = async () => {
     const res = await fetch(`${apiUrl}/images?category=${activeTab}`);
     // const res = await fetch(`${apiUrl}/api/images?category=${activeTab}`);
     // const res = await fetch(`/api/images?category=${activeTab}`);
+
     if (!res.ok) throw new Error("Failed to fetch images");
 
     const data = await res.json();
-
+    console.log("-------",data);
     if (Array.isArray(data)) {
       setImages(data);
     } else {
