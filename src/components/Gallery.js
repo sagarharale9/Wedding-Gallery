@@ -12,43 +12,41 @@ export default function Gallery() {
   const [error, setError] = useState(null);
 const { isAdmin, logout } = useAuth();
 
-const fetchImages = async () => {
-  try {
-    setLoading(true);
-    setError(null);
-    const apiUrl = "https://sagarharale9.github.io/Wedding-Gallery"; // Use environment variable
-    const res = await fetch(`${apiUrl}/images?category=${activeTab}`);
-    // const res = await fetch(`${apiUrl}/api/images?category=${activeTab}`);
-    // const res = await fetch(`/api/images?category=${activeTab}`);
+  const fetchImages=(activeTab)=>{
+    console.log(activeTab)
+    if (!activeTab) return;
 
-    if (!res.ok) throw new Error("Failed to fetch images");
+    console.log("Fetching images for category:", activeTab); // Debugging log
 
-    const data = await res.json();
-    console.log("-------",data);
-    if (Array.isArray(data)) {
-      setImages(data);
-    } else {
-      throw new Error("Invalid API response");
-    }
-  } catch (error) {
-    console.error("Error fetching images:", error);
-    setError(error.message);
-  } finally {
-    setLoading(false);
+    fetch("/images.json")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Fetched images.json data:", data); // Debugging log
+        if (data[activeTab]) {
+          console.log("Setting images:", data[activeTab],activeTab); // Debugging log
+          setImages(data[activeTab]);
+          console.log(images);
+          setLoading(false);
+        } else {
+          console.warn(`Category '${activeTab}' not found in images.json`);
+          setImages([]);
+        }
+      })
+      .catch((err) => console.error("Error loading images:", err));
   }
-}
 
-  useEffect(() => {
-    fetchImages();
-  }, [activeTab]);
+    useEffect(() => {
+      fetchImages(activeTab);
+    }, [activeTab]);
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6 bg-gray-500 p-5">Pre-Wedding & Wedding Gallery</h1>
-      {/* <div className="flex justify-between p-4 bg-gray-800 text-white">
-      <h1 className="text-xl font-bold justify-center">Wedding Gallery</h1>
-    </div> */}
-    {/* Show Login or Logout Button */}
     {isAdmin ? (
         <button onClick={logout} className="bg-red-500 px-4 py-2 rounded">Logout</button>
       ) : (
