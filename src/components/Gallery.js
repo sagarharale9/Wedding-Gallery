@@ -18,7 +18,7 @@ const { isAdmin, logout } = useAuth();
 
     console.log("Fetching images for category:", activeTab); // Debugging log
 
-    fetch("/images.json")
+    fetch("/Wedding-Gallery/images.json")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
