@@ -30,7 +30,7 @@ export default function ImageGrid({ images, title, refreshImage }) {
         {images.map((src, index) => (
           <div key={index} className="relative">
             <img
-              src={`Wedding-Gallery${src}`}
+              src={src}
               alt={`${title} ${index + 1}`}
               className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300 cursor-pointer"
               loading="lazy"
@@ -40,7 +40,7 @@ export default function ImageGrid({ images, title, refreshImage }) {
             {/* Show Delete Button for Admins */}
             {isAdmin && (
               <button
-                onClick={() => handleDelete(`Wedding-Gallery${src}`)}
+                onClick={() => handleDelete(src)}
                 className="absolute top-2 right-2 bg-red-500 text-white text-sm p-1 rounded shadow"
               >
                 ✖ Delete
