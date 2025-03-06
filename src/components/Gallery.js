@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Gallery() {
-  const [activeTab, setActiveTab] = useState("pre-wedding");
+  const [activeTab, setActiveTab] = useState("wedding");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
